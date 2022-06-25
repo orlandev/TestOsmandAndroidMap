@@ -1,5 +1,7 @@
 package com.orlandev.testosmandandroidmap
 
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.viewinterop.AndroidView
@@ -61,16 +64,28 @@ fun MapScreen() {
         )
     }
 
-    val pt =SimplePointTheme(points, true);
+    val textStyle = Paint();
+    textStyle.style = Paint.Style.FILL
+    textStyle.color = Color.parseColor("#FF00ff")
+    textStyle.textAlign = Paint.Align.CENTER
+    textStyle.textSize = 24F
+
+    val pt = SimplePointTheme(points, true);
 
 // set some visual options for the overlay
 // we use here MAXIMUM_OPTIMIZATION algorithm, which works well with >100k points
     val opt = SimpleFastPointOverlayOptions.getDefaultStyle()
         .setAlgorithm(SimpleFastPointOverlayOptions.RenderingAlgorithm.MAXIMUM_OPTIMIZATION)
-        .setRadius(7f).setIsClickable(true).setCellSize(15)
+        .setRadius(7f)
+        .setIsClickable(true)
+        .setCellSize(15)
+        .setTextStyle(textStyle)
+        .setRadius(20f)
+
 
 // create the overlay with the theme
-    val sfpo = SimpleFastPointOverlay(pt, opt);
+    val sfpo = SimpleFastPointOverlay(pt, opt)
+
 
 
     Scaffold(
